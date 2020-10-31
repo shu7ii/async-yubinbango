@@ -1,7 +1,7 @@
 {
   "name": "async-yubinbango",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "郵便番号から住所を取得",
   "module": "dist/async-yubinbango.modern.js",
   "types": "build/index.d.ts",
   "source": "build/main.js",
@@ -12,9 +12,13 @@
     "type": "git",
     "url": "git+https://github.com/shu7ii/async-yubinbango.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "yubinbango",
+    "郵便番号",
+    "住所"
+  ],
+  "author": "shu7ii",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/shu7ii/async-yubinbango/issues"
   },
@@ -22,5 +26,12 @@
   "devDependencies": {
     "microbundle": "^0.12.4",
     "typescript": "^4.0.5"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist/",
+    "build/*.d.ts"
+  ]
 }

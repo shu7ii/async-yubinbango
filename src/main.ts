@@ -72,48 +72,39 @@ type APIResponse = {
 };
 
 const JSONP_FUNCTION_NAME = "$yubin";
-
-const SCRIPT_ID = "ENX732Q7X5ARV4KEXQZG0P4T01";
+const API_RESPONSE_VAR_NAME = "__asyncYubinbangoAPIResponse";
 
 declare global {
   interface Window {
     [JSONP_FUNCTION_NAME]: (result: APIResponse) => void;
+    [API_RESPONSE_VAR_NAME]: Promise<APIResponse>;
   }
 }
 
-const jsonp = (url: string, cb: (result: APIResponse) => void) => {
-  window[JSONP_FUNCTION_NAME] = (result: APIResponse) => cb(result);
-
-  const script = document.createElement("script");
-  script.setAttribute("id", SCRIPT_ID);
-  script.setAttribute("src", url);
-  document.head.appendChild(script);
-};
-
 export const get = async (zip: string): Promise<Address> => {
+  window[JSONP_FUNCTION_NAME] = (result: APIResponse) => {
+    window[API_RESPONSE_VAR_NAME] = Promise.resolve(result);
+  };
+
   const yubin3 = zip.slice(0, 3);
+  return new Promise(async (resolve, reject) => {
+    await import(`${URL}/${yubin3}.js`);
+    const result: APIResponse = await window[API_RESPONSE_VAR_NAME];
+    const data = result[zip];
+    if (data == undefined) {
+      // TODO: reject -> resolve
+      reject("not found");
+      return;
+    }
 
-  return new Promise((resolve, reject) => {
-    jsonp(`${URL}/${yubin3}.js`, (result: APIResponse) => {
-      const data = result[zip];
+    const address: Address = {
+      region_id: data[0],
+      region: REGION[data[0]],
+      locality: data[1],
+      street: data[2],
+      extended: data[3],
+    };
 
-      if (data == undefined) {
-        // TODO: reject -> resolve
-        reject("not found");
-        return;
-      }
-
-      const address: Address = {
-        region_id: data[0],
-        region: REGION[data[0]],
-        locality: data[1],
-        street: data[2],
-        extended: data[3],
-      };
-
-      resolve(address);
-    });
-
-    document.querySelector(`#${SCRIPT_ID}`)?.remove();
+    resolve(address);
   });
 };

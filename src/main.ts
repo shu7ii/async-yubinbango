@@ -29,3 +29,13 @@ export const get = async (zip: string): Promise<Address> => {
     resolve(address);
   });
 };
+
+/** Address形式のデータをstringに変換する */
+export const addressToString = ({
+  region,
+  locality = "",
+  street = "",
+  extended = "",
+}: Address): string => {
+  return `${region}${locality}${street}${extended}`;
+};

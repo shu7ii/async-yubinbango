@@ -17,6 +17,9 @@ npm i @shu7ii/async-yubinbango
 
 TODO:
 
+- 内部で dynamic import を使っているので `type="module"` で読み込む必要がある
+  - IE11 では使えない
+
 ## API
 
 TODO:

@@ -6,6 +6,7 @@ window[JSONP_FUNCTION_NAME] = (result: APIResponse) => {
   window[API_RESPONSE_VAR_NAME] = Promise.resolve(result);
 };
 
+/** stringの郵便番号からAddressを取得する */
 export const get = async (zip: string): Promise<Address> => {
   const yubin3 = zip.slice(0, 3);
   return new Promise(async (resolve, reject) => {

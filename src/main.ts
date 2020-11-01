@@ -1,9 +1,8 @@
 import { Address, APIResponse } from "./types";
 import { URL, REGION } from "./constants";
-import { JSONP_FUNCTION_NAME, API_RESPONSE_VAR_NAME } from "./global";
 
-window[JSONP_FUNCTION_NAME] = (result: APIResponse) => {
-  window[API_RESPONSE_VAR_NAME] = Promise.resolve(result);
+globalThis.$yubin = (result: APIResponse) => {
+  globalThis.asyncYubinbangoAPIResponse = Promise.resolve(result);
 };
 
 /** stringの郵便番号からAddressを取得する */
@@ -11,7 +10,7 @@ export const get = async (zip: string): Promise<Address> => {
   const yubin3 = zip.slice(0, 3);
   return new Promise(async (resolve, reject) => {
     await import(`${URL}/${yubin3}.js`);
-    const result: APIResponse = await window[API_RESPONSE_VAR_NAME];
+    const result: APIResponse = await globalThis.asyncYubinbangoAPIResponse;
     const data = result[zip];
     if (data == undefined) {
       // TODO: reject -> resolve

@@ -1,6 +1,6 @@
 {
   "name": "@shu7ii/async-yubinbango",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "郵便番号から住所を取得",
   "module": "dist/async-yubinbango.modern.js",
   "type": "module",

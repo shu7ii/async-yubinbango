@@ -9,7 +9,7 @@ globalThis.$yubin = (result: APIResponse) => {
 export const get = async (zip: string): Promise<Address> => {
   const yubin3 = zip.slice(0, 3);
   return new Promise(async (resolve, reject) => {
-    await import(`${URL}/${yubin3}.js`);
+    await import(/* webpackIgnore: true */ `${URL}/${yubin3}.js`);
     const result: APIResponse = await globalThis.asyncYubinbangoAPIResponse;
     const data = result[zip];
     if (data == undefined) {

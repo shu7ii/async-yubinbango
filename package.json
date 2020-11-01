@@ -7,7 +7,7 @@
   "types": "build/index.d.ts",
   "source": "build/main.js",
   "scripts": {
-    "build": "tsc && microbundle -f modern --no-sourcemap"
+    "build": "tsc && microbundle -f modern --no-sourcemap --no-compress"
   },
   "repository": {
     "type": "git",

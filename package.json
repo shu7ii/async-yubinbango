@@ -32,7 +32,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "files": [
-    "dist/",
+    "dist/async-yubinbango.module.js",
     "build/*.d.ts"
   ]
 }

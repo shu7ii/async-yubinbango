@@ -22,7 +22,7 @@ const jsonp = (url: string): Promise<APIResponse> => {
 };
 
 /** stringの郵便番号からAddressを取得する */
-export const get = async (zip: string): Promise<Address> => {
+export const getAddress = async (zip: string): Promise<Address> => {
   const head3 = zip.slice(0, 3);
 
   return new Promise(async (resolve, reject) => {

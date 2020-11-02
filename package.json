@@ -5,7 +5,7 @@
   "module": "dist/async-yubinbango.modern.js",
   "type": "module",
   "types": "build/index.d.ts",
-  "source": "build/main.js",
+  "source": "build/index.js",
   "scripts": {
     "build": "tsc && microbundle -f modern --no-sourcemap --no-compress"
   },

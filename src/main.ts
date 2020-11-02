@@ -1,17 +1,34 @@
 import { Address, APIResponse } from "./types";
 import { URL, REGION } from "./constants";
 
-globalThis.$yubin = (result: APIResponse) => {
-  globalThis.asyncYubinbangoAPIResponse = Promise.resolve(result);
+/**
+ * urlをsrcとする<script>を作ってheadに挿入する
+ *
+ * JSONPで読み込むスクリプトは
+ * $yubinという関数にAPIResponse型のデータを渡して実行するので
+ * それをresolveするPromiseを返す
+ */
+const jsonp = (url: string): Promise<APIResponse> => {
+  const script = document.createElement("script");
+  return new Promise((res) => {
+    globalThis.$yubin = (response: APIResponse) => {
+      res(response);
+      script.remove();
+    };
+
+    script.src = url;
+    document.head.appendChild(script);
+  });
 };
 
 /** stringの郵便番号からAddressを取得する */
 export const get = async (zip: string): Promise<Address> => {
-  const yubin3 = zip.slice(0, 3);
+  const head3 = zip.slice(0, 3);
+
   return new Promise(async (resolve, reject) => {
-    await import(/* webpackIgnore: true */ `${URL}/${yubin3}.js`);
-    const result: APIResponse = await globalThis.asyncYubinbangoAPIResponse;
-    const data = result[zip];
+    const response: APIResponse = await jsonp(`${URL}/${head3}.js`);
+
+    const data = response[zip];
     if (data == undefined) {
       // TODO: reject -> resolve
       reject("not found");

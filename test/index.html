@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module">
-      import { get } from "/dist/async-yubinbango.modern.js";
+      import { getAddress } from "/dist/async-yubinbango.modern.js";
       const input = document.querySelector("#input");
       const button = document.querySelector("#button");
 
       button.onclick = () => {
-        get(input.value).then((address) => {
+        getAddress(input.value).then((address) => {
           console.log(address);
         });
       };

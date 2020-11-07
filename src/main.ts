@@ -24,10 +24,9 @@ const jsonp = (url: string): Promise<APIResponse> => {
 /** stringの郵便番号からAddressを取得する */
 export const getAddress = async (zip: string): Promise<Address> => {
   const head3 = zip.slice(0, 3);
+  const response: APIResponse = await jsonp(`${URL}/${head3}.js`);
 
-  return new Promise(async (resolve, reject) => {
-    const response: APIResponse = await jsonp(`${URL}/${head3}.js`);
-
+  return new Promise((resolve, reject) => {
     const data = response[zip];
     if (data == undefined) {
       // TODO: reject -> resolve

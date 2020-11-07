@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 import { APIResponse } from "./types";
 
 declare global {
